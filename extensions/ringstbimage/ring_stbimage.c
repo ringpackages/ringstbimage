@@ -4,6 +4,31 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+RING_FUNC(ring_get_stbi_default)
+{
+	RING_API_RETNUMBER(STBI_default);
+}
+
+RING_FUNC(ring_get_stbi_grey)
+{
+	RING_API_RETNUMBER(STBI_grey);
+}
+
+RING_FUNC(ring_get_stbi_grey_alpha)
+{
+	RING_API_RETNUMBER(STBI_grey_alpha);
+}
+
+RING_FUNC(ring_get_stbi_rgb)
+{
+	RING_API_RETNUMBER(STBI_rgb);
+}
+
+RING_FUNC(ring_get_stbi_rgb_alpha)
+{
+	RING_API_RETNUMBER(STBI_rgb_alpha);
+}
+
 
 RING_FUNC(ring_stbi_load_from_memory)
 {
@@ -426,20 +451,6 @@ RING_FUNC(ring_stbi_failure_reason)
 }
 
 
-RING_FUNC(ring_stbi_image_free)
-{
-	if ( RING_API_PARACOUNT != 1 ) {
-		RING_API_ERROR(RING_API_MISS1PARA);
-		return ;
-	}
-	if ( ! RING_API_ISCPOINTER(1) ) {
-		RING_API_ERROR(RING_API_BADPARATYPE);
-		return ;
-	}
-	stbi_image_free((void *) RING_API_GETCPOINTER(1,"void"));
-}
-
-
 RING_FUNC(ring_stbi_info_from_memory)
 {
 	if ( RING_API_PARACOUNT != 5 ) {
@@ -807,7 +818,6 @@ RING_API void ringlib_init(RingState *pRingState)
 	ring_vm_funcregister("stbi_is_hdr",ring_stbi_is_hdr);
 	ring_vm_funcregister("stbi_is_hdr_from_file",ring_stbi_is_hdr_from_file);
 	ring_vm_funcregister("stbi_failure_reason",ring_stbi_failure_reason);
-	ring_vm_funcregister("stbi_image_free",ring_stbi_image_free);
 	ring_vm_funcregister("stbi_info_from_memory",ring_stbi_info_from_memory);
 	ring_vm_funcregister("stbi_is_16_bit_from_memory",ring_stbi_is_16_bit_from_memory);
 	ring_vm_funcregister("stbi_info",ring_stbi_info);
@@ -824,4 +834,9 @@ RING_API void ringlib_init(RingState *pRingState)
 	ring_vm_funcregister("stbi_zlib_decode_buffer",ring_stbi_zlib_decode_buffer);
 	ring_vm_funcregister("stbi_zlib_decode_noheader_malloc",ring_stbi_zlib_decode_noheader_malloc);
 	ring_vm_funcregister("stbi_zlib_decode_noheader_buffer",ring_stbi_zlib_decode_noheader_buffer);
+	ring_vm_funcregister("get_stbi_default",ring_get_stbi_default);
+	ring_vm_funcregister("get_stbi_grey",ring_get_stbi_grey);
+	ring_vm_funcregister("get_stbi_grey_alpha",ring_get_stbi_grey_alpha);
+	ring_vm_funcregister("get_stbi_rgb",ring_get_stbi_rgb);
+	ring_vm_funcregister("get_stbi_rgb_alpha",ring_get_stbi_rgb_alpha);
 }
